@@ -4,6 +4,8 @@ Solving the cartpole problem with reinforcement learning
 
 The CartPole environment is a simple environment where the objective is to move a cart left or right in order to balance an upright pole for as long as possible. The state space is described with 4 values representing Cart Position, Cart Velocity, Pole Angle, and Pole Velocity at the Tip. The action space is described with 2 values (0 or 1) allowing the car to either move left or right at each time step.
 
+![alt text](https://thumbs.gfycat.com/GreedyJampackedBlackfish-size_restricted.gif)
+
 ### Q-learning
 Q-learning learns the action-value function Q(s, a): how good to take an action at a particular state. In Q-learning, we build a memory table Q[s, a] to store Q-values for all possible combinations of s and a. Q-learning is basically about creating the cheat sheet Q. We find out the reward R (if any) and the new state s’. From the memory table, we determine the next action a’ to take which has the maximum Q(s’, a’). 
 The Bellman Equation tells us how to update our Q-table after each step we take.
@@ -22,12 +24,12 @@ A DQN, or Deep Q-Network replaces the regular Q-table with a neural network. Rat
 The standard DQN method has been shown to overestimate the true Q-value, because for the target an argmax over estimated Q-values is used. Therefore when some values are overestimated and some underestimated, the overestimated values have a higher probability to be selected.
 
 Standard DQN target:
-Q(st, at) = rt + Q(st+1, argmaxaQ(st, a))
+Q(s<sub>t</sub>, a<sub>t</sub>) = r<sub>t</sub> + Q(st+1, argmax<sub>a</sub>Q(s<sub>t</sub>, a))
 
 By using two uncorralated Q-Networks we can prevent this overestimation. In order to save computation time we do gradient updates only for one of the Q-Networks and periodically update the parameters of the target Q-Network to match the parameter of the Q-Network that is updated.
 
 The Double DQN target then becomes:
-Q(st, at) = rt + Qθ(st+1, argmaxaQtarget(st, a))
+Q(s<sub>t</sub>, a<sub>t</sub>) = r<sub>t</sub> + Q<sub>θ</sub>(st+1, argmax<sub>a</sub>Q<sub>target</sub>(s<sub>t</sub>, a))
 
 And the loss function is given by:
-(Q(st, at) - Qθ(st, at))^2
+(Q(s<sub>t</sub>, a<sub>t</sub>) - Q<sub>θ</sub>(s<sub>t</sub>, a<sub>t</sub>))^2
